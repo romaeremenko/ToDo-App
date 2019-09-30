@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="src/styles/main.css">
 </head>
 <body>
-    <input id="input" type="text"><input id="addToList" type="submit" value="Добавить">
-    <table id="list"></table>
-    <script src="dist/bundle.js"></script>
+    <div id="toDoList">
+        <div id="interfaceInput">
+            <input id="input" type="text"><input id="addToList" type="submit" value="Добавить">
+        </div>
+        <table id="list"></table>
+        <script src="src/js/index.js"></script>
+        <script src="http://localhost:35729/livereload.js"></script>
+    </div>
 </body>
 </html>

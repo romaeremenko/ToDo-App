@@ -1,6 +1,13 @@
 const path = require('path');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
+const HtmlWebpackPlugin =  require('html-webpack-plugin');
 
 module.exports = {
+    plugins: [
+        new LiveReloadPlugin(), new HtmlWebpackPlugin({
+            template: './index.html'
+        })
+    ],
     entry: {
         main: ["webpack-dev-server/client", './src/js/index.js']
     },
@@ -15,6 +22,6 @@ module.exports = {
     },
     devServer: {
         host:'localhost',
-        port: 8080
+        port: 8080,
     }
 };

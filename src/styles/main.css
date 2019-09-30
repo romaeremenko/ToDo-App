@@ -1,0 +1,111 @@
+input, button {
+    outline: 0;
+}
+
+#toDoList {
+    width: 500px;
+    margin: auto;
+    padding: 8%;
+    min-height: 300px;
+    border-radius: 8px;
+    background: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+}
+
+
+#interfaceInput {
+    display: flex;
+    width: 500px;
+    border-radius: 8px;
+    justify-content: space-between;
+}
+
+#list {
+    width: 500px;
+    margin-top: 10px;
+    background: rgba(255,255,255,.3);
+    border-collapse: separate;
+    border-spacing: 7px 11px;
+    border-radius: 8px;
+}
+
+#input, #addToList {
+    border-radius: 8px;
+    border: 1px solid cyan;
+}
+
+#input{
+    outline-width: 0;
+    width: 60%;
+    padding: 12px 20px;
+}
+
+#addToList{
+    width: 29%;
+    padding: 5px;
+    font-size: 80%;
+    background: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    font-weight: 600;
+    color: #fff;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+
+#addToList:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+[data-task-clear] {
+    width: 200px;
+    height: 100px;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background: url("../images/delete.png") no-repeat;
+}
+
+tr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px;
+    border-bottom: 1px solid aliceblue;
+}
+
+td {
+    font-family: monospace;
+}
+
+[data-task-status] {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+[data-task-status]:checked {
+    background-color: #0c89f4;
+    border: 1px solid #ffffff;
+    box-shadow: 0 1px 2px rgba(38, 43, 102, 0), 0px -2px 12px 4px rgb(114, 225, 123);
+    color: #99a1a7;
+}
+
+[data-task-done]{
+    font-family: monospace;
+    position: absolute;
+    display: none;
+    margin: 0px 40px;
+}
