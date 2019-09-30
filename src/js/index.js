@@ -5,18 +5,16 @@ class Task {
     }
 
     insertNode(task){
-        let values = task;
+        let values = task; // valus !== task именование; используй const для значений без изменения
         let node = document.createElement('tr');
-        let status = document.createElement('input');
         let clear = document.createElement('button');
         let text = document.createElement('td');
 
-        status.setAttribute('type','checkbox');
-        status.setAttribute('data-task-status', values.task);
+
         clear.setAttribute('data-task-clear', values.task);
         text.innerText = values.task;
 
-        node.appendChild(status);
+        this._createTaskStatusField(node); //аналогично для кнопки удаления
         node.appendChild(text);
         node.appendChild(clear);
         document.getElementById('list').appendChild(node);
@@ -35,6 +33,8 @@ class Task {
             status: false
         };
 
+        // Приведи в нормальый вид if() {...} else {...}
+        // JSON.stringify(toDo) вынеси
         if(this.checkTask(JSON.stringify(toDo))) return;
 
         else {
@@ -49,13 +49,21 @@ class Task {
     }
 
     checkTask(task){
-        return this.tasks.has(task) ? true : false;
+        return this.tasks.has(task) ? true : false; // Упростить
     }
 
     removeTask(task){
         if(this.checkTask(task)){
             this.tasks.delete(task)
         }
+    }
+
+    _createTaskStatusField(node) {
+        const input = document.createElement('input');
+        input.setAttribute('type','checkbox');
+        input.setAttribute('data-task-status', false);
+
+        node.appendChild(input);
     }
 
 }
@@ -67,11 +75,12 @@ window.onload = function () {
     addToList.onclick = function () {
         toDoList.addTaskToList();
         input.value = null;
-    }
+    }// ; не забывай и ниже
 
     list.onclick = function (event) {
         if(event.target.hasAttribute('data-task-status')){
             let task = event.target.getAttribute('data-task-status');
+            // упростить if
             if(event.target.checked) {
                 toDoList.changeStatus(task, event.target, false);
             } else {
