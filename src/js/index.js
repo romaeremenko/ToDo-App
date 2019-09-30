@@ -1,16 +1,17 @@
 class Task {
 
     constructor(){
-        this.tasks = new Set();
+        this.tasks = new Array();
     }
 
     insertNode(task){
-        const toDo = task; // valus !== task именование; используй const для значений без изменения
         let node = document.createElement('tr');
 
-        this._createTaskStatusField(node,toDo); //аналогично для кнопки удаления
-        this._createTaskTextFiels(node,toDo);
-        this._createTaskDeleteButton(node,toDo);
+        this._createTaskStatusField(node,task); //аналогично для кнопки удаления
+        this._createTaskTextFiels(node,task);
+        this._createTaskEditButton(node, task);
+        this._createTaskEditDescription(node,task);
+        this._createTaskDeleteButton(node,task);
 
         document.getElementById('list').appendChild(node);
     }
@@ -25,16 +26,14 @@ class Task {
 
         const toDo = {
             task: text,
-            status: false
+            status: false,
+            description: "",
         };
 
-        const task = JSON.stringify(toDo);
-        // Приведи в нормальый вид if() {...} else {...}
-        // JSON.stringify(toDo) вынеси
-        if(this.checkTask(task)){
+        if(this.checkTask(toDo.task)){
             return false;
         } else {
-            this.tasks.add(task);
+            this.tasks.push(toDo);
             this.insertNode(toDo);
         }
         for(let t of this.tasks){
@@ -43,18 +42,26 @@ class Task {
     }
 
     changeStatus(task, target, status){
-        this.tasks.delete(`{"task":"${task}","status":${status}}`);
-        this.tasks.add(`{"task":"${task}","status":${!status}}`);
+        this.tasks[this.getIndex(task)].status = !status;
+
         let done = document.querySelector('[data-task-done = "'+ task + '"]');
         let innerText = document.querySelector('[data-task = "'+ task + '"]');
+        let editButton = document.querySelector('[data-task-editTaskName = "'+ task + '"]');
+        let descriptionButton = document.querySelector('[data-task-editTaskDescription = "'+ task + '"]');
         if (status == true) {
             done.style.display = "none";
             innerText.style.textDecoration = "none";
             innerText.style.color = 'black';
+            editButton.style.display = 'block';
+            descriptionButton.style.display = 'block';
+
+
         } else {
             done.style.display = "flex";
             innerText.style.textDecoration = "line-through";
             innerText.style.color = 'darkgrey';
+            editButton.style.display = 'none';
+            descriptionButton.style.display = 'none';
         }
 
         for(let t of this.tasks){
@@ -63,12 +70,17 @@ class Task {
     }
 
     checkTask(task){
-        return this.tasks.has(task); // Упростить
+        console.log(this.tasks.map( obj => obj.task).includes(task));
+        return this.tasks.map( obj => obj.task).includes(task);
+    }
+
+    getIndex(element){
+        return this.tasks.map( obj => obj.task).indexOf(element);
     }
 
     removeTask(task){
         if(this.checkTask(task)){
-            this.tasks.delete(task)
+            this.tasks.splice(this.getIndex(task),1);
         }
 
         for(let t of this.tasks){
@@ -103,6 +115,20 @@ class Task {
         text.innerText = toDo.task;
         node.appendChild(text);
     }
+
+    _createTaskEditButton(node, toDo){
+        const edit = document.createElement('button');
+        edit.setAttribute('data-task-editTaskName', toDo.task);
+
+        node.appendChild(edit);
+    }
+
+    _createTaskEditDescription(node, toDo){
+        const descrition = document.createElement('button');
+        descrition.setAttribute('data-task-editTaskDescription', toDo.task);
+
+        node.appendChild(descrition);
+    }
 }
 
 window.onload = function () {
@@ -122,12 +148,11 @@ window.onload = function () {
         }
 
         if(event.target.hasAttribute('data-task-clear')){
-            let status = event.target.parentNode.firstChild.checked;
             let answer = confirm("Удалить?");
             if(!answer) return;
             let task = event.target.getAttribute('data-task-clear');
             event.target.parentElement.remove();
-            toDoList.removeTask(`{"task":"${task}","status":${status}}`);
+            toDoList.removeTask(task);
         }
     };
 };
