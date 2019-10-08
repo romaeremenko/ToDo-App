@@ -237,7 +237,7 @@ window.onload = function () {
 
     console.log(listOfTasks);
 
-    if(listOfTasks.length != 0){
+    if(listOfTasks != null){
         for (let elem of listOfTasks){
             recoverTasks(elem);
         }
